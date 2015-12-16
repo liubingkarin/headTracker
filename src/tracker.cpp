@@ -60,7 +60,8 @@ void Tracker::extractHeadModel(Mat &image, CloudPtr inputCloud)
     equalizeHist( frame_gray, frame_gray );
 
     //-- Detect faces
-    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
+    face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2,
+                                   0|CV_HAAR_SCALE_IMAGE, Size(30, 30) );
 
     cout << faces.size() << endl;
     for( size_t i = 0; i < faces.size(); i++ )
@@ -71,7 +72,7 @@ void Tracker::extractHeadModel(Mat &image, CloudPtr inputCloud)
     //-- Show what you got
 
     string window_name = "Capture - Face detection";
-    imshow( window_name, frame_gray );
+    imshow( window_name, frame);
     waitKey(10);
 }
 
