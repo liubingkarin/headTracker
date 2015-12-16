@@ -13,7 +13,7 @@ Tracker::Tracker()
     m_headModel.reset(new Cloud);
     m_headPose=Affine3f::Identity();
 
-    String face_cascade_name = "haarcascade_frontalface_alt.xml";
+    String face_cascade_name = "/home/liubing/jade_workspace/src/headTrack/resource/haarcascade_frontalface_alt.xml";
     //1. Load the cascades
     if( !face_cascade.load( face_cascade_name ) )
     {
@@ -56,7 +56,7 @@ void Tracker::extractHeadModel(Mat &image, CloudPtr inputCloud)
     Mat frame = image;
     Mat frame_gray;
 
-    cvtColor( frame, frame_gray, CV_BGR2GRAY );
+    cvtColor( frame, frame_gray, CV_RGB2GRAY );
     equalizeHist( frame_gray, frame_gray );
 
     //-- Detect faces
@@ -67,12 +67,12 @@ void Tracker::extractHeadModel(Mat &image, CloudPtr inputCloud)
     for( size_t i = 0; i < faces.size(); i++ )
     {
         Point center( faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5 );
-        ellipse( frame, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
+        ellipse( frame_gray, center, Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, Scalar( 255, 0, 255 ), 4, 8, 0 );
     }
     //-- Show what you got
 
     string window_name = "Capture - Face detection";
-    imshow( window_name, frame);
+    imshow( window_name, frame_gray);
     waitKey(10);
 }
 
